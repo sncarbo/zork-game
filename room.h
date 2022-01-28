@@ -6,7 +6,7 @@ class Room : public Entity
 public:
 	Room(const char* name, const char* description);
 	~Room();
-private:
+	void Update() const;
 };
 
 #endif

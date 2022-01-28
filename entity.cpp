@@ -9,11 +9,12 @@ Entity::Entity(const char* name, const char* description, Entity* parent = NULL)
 	if (parent != NULL)
 		parent->container.push_back(this);
 }
-//
+//-----------------
 Entity::~Entity(){}
-//
+//-----------------
 void Entity::Update() const
 {
 	cout << name << endl;
 	cout << description << endl;
 }
+//-----------------
