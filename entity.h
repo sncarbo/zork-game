@@ -22,11 +22,19 @@ public:
 
 	virtual void Update() const;
 
-private:
+	Entity* findContains(const string& name, EntityType type) const;
+
+	void changeParentTo(Entity* new_parent);
+	string getName() const;
+	string geDescription() const;
+	EntityType getType() const;
+
+protected:
 	EntityType type;
 	string name;
 	string description;
 	list<Entity*> contains;
+	Entity* parent;
 
 };
 

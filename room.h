@@ -4,15 +4,15 @@
 #include <string>
 #include <list>
 #include "entity.h"
-#include "exit.h"
-#include "item.h"
+
+class Exit;
 
 using namespace std;
 
 class Room : public Entity
 {
 public:
-	Room(const char* name, const char* next_room_name, const char* description, Room* next_room);
+	Room(const char* name, const char* description);
 	~Room();
 
 	void Update() const;

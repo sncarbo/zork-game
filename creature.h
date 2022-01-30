@@ -2,6 +2,7 @@
 #define __CREATURE__
 
 #include <string>
+#include <vector>
 #include "entity.h"
 #include "room.h"
 #include "item.h"
@@ -17,11 +18,15 @@ public:
 	virtual void Update() const;
 	virtual void stats() const;
 
-	virtual bool go(const vector<string>& args);
-	virtual bool take(const vector<string>& args);
-	virtual bool drop(const vector<string>& args);
-	virtual bool inventory() const;
-	virtual bool unlock(const vector<string>& args);
+	virtual bool go(const string& direction);
+	virtual bool take(const string& item);
+	virtual bool drop(const string& item);
+	virtual void inventory() const;
+	virtual bool unlock(const string& direction);
+
+	bool isAlive() const;
+	Room* getRoom() const;
+	Item* getItemTaken() const;
 
 private:
 	bool alive;

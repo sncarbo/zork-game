@@ -2,8 +2,9 @@
 #define __EXIT__
 
 #include "entity.h"
-#include "room.h"
 #include <string>
+
+class Room;
 
 class Exit : public Entity
 {
@@ -14,7 +15,8 @@ public:
 	void Update() const;
 
 	bool isLocked() const;
-	string& getNextRoomName() const;
+	void unlock();
+	string& getNextRoomName();
 	Room* getNextRoom() const;
 	Entity* getKey() const;
 

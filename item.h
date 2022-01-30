@@ -3,7 +3,8 @@
 
 #include <string>
 #include "entity.h"
-#include "room.h"
+
+class Room;
 
 using namespace std;
 
@@ -21,6 +22,9 @@ public:
 	~Item();
 
 	void Update() const;
+	 
+	ItemType getItemType() const;
+	string& getItemTypeString() const;
 
 private:
 	ItemType item_type;

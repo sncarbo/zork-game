@@ -4,13 +4,18 @@
 #include <string>
 #include <list>
 
+using namespace std;
+
+class Entity;
+class Player;
+
 class World
 {
 public:
 	World();
 	~World();
 private:
-	list<Entities*> entities;
+	list<Entity*> entities;
 	Player* player;
 };
 
