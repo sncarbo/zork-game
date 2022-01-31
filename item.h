@@ -10,24 +10,28 @@ using namespace std;
 
 enum ItemType 
 {
-	KEY,
+	GAMEBOY,
+	LAPTOP,
+	SKETCHBOOK,
 	BOX,
-	PAPER
+	KEY
 };
 
 class Item : public Entity
 {
 public:
-	Item(const char* name, const char* description, Entity* parent, ItemType item_type);
+	Item(const char* name, const char* description, ItemType item_type, Room* room);
 	~Item();
 
-	void Update() const;
-	 
+	void update() const;
+	
+	Room* getRoom() const;
 	ItemType getItemType() const;
 	string& getItemTypeString() const;
 
 private:
 	ItemType item_type;
+	Room* room;
 };
 
 #endif // !__ITEM__

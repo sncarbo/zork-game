@@ -2,22 +2,22 @@
 #include "room.h"
 
 Room::Room(const char* name, const char* description) :
-Entity(name, description, NULL)
+Entity(name, description)
 {
 	type = ROOM;
 }
-//--------------------------------------
+
 Room::~Room() {}
-//---------------------------------------
-void Room::Update() const
+
+void Room::update() const
 {
-	cout << "Actual room: " << name << endl;
+	cout << "Room name: " << name << endl;
 	cout << description << endl;
 }
 //---------------------------------------
-Exit* Room::getExit(const string& direction) const
+Exit* Room::getExit() const
 {
-	Exit* result = ((Exit*) findContains(direction, EXIT));
+	Exit* result = (Exit*)findByEntityType(EXIT);
 
 	return result;
 }

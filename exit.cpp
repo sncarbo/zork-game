@@ -1,43 +1,66 @@
 #include <iostream>
 #include "exit.h"
+#include "room.h"
 
-//----------------------------
-Exit::Exit(const char* name, const char* next_room_name, const char* description, Room* actual_room, Room* next_room) :
-Entity(name, description, (Entity*)actual_room), locked(true), next_room_name(next_room_name), next_room(next_room), key(NULL)
+Exit::Exit(const char* name, const char* description, Room* source_room, Room* next_room, DirectionType direction) :
+Entity(name, description), locked(true), source_room(source_room), next_room(next_room), direction(direction)
 {
 	type = ENTITY;
 }
-//----------------------------
+
 Exit::~Exit(){}
-//----------------------------
-void Exit::Update() const
+
+void Exit::update() const
 {
-	cout << "This exit connects " << name << " and " << next_room_name << endl;
+	cout << "This exit connects " << getSourceRoom()->getName() << " and " << getNextRoom()->getName() << endl;
 	cout << description << endl;
 }
-//----------------------------
+
 bool Exit::isLocked() const
 {
 	return (locked == true);
 }
-//----------------------------
+
 void Exit::unlock()
 {
 	locked = false;
 }
-//----------------------------
-string& Exit::getNextRoomName()
+
+Room* Exit::getSourceRoom() const
 {
-	return next_room_name;
+	return source_room;
 }
-//----------------------------
+
 Room* Exit::getNextRoom() const
 {
 	return next_room;
 }
-//----------------------------
-Entity* Exit::getKey() const
+
+DirectionType Exit::getDirection() const
 {
-	return key;
+	return direction;
 }
-//----------------------------
+
+string& Exit::getDirectionString() const
+{
+	string result = "";
+
+	switch (direction)
+	{
+	case NORTH:
+		result = "NORTH";
+		break;
+	case SOUTH:
+		result = "SOUTH";
+		break;
+	case EAST:
+		result = "EAST";
+		break;
+	case WEST:
+		result = "WEST";
+		break;
+	}
+
+	return result;
+}
+

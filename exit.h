@@ -6,25 +6,33 @@
 
 class Room;
 
+enum DirectionType {
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+};
+
 class Exit : public Entity
 {
 public:
-	Exit(const char* name, const char* next_room_name, const char* description, Room* actual_room, Room* next_room);
+	Exit(const char* name, const char* description, Room* source_room, Room* next_room, DirectionType direction);
 	~Exit();
 
-	void Update() const;
+	void update() const;
 
 	bool isLocked() const;
 	void unlock();
-	string& getNextRoomName();
+	Room* getSourceRoom() const;
 	Room* getNextRoom() const;
-	Entity* getKey() const;
+	DirectionType getDirection() const;
+	string& getDirectionString() const;
 
 private:
 	bool locked;
-	string next_room_name;
+	DirectionType direction;
+	Room* source_room;
 	Room* next_room;
-	Entity* key;
 };
 
 #endif // !__EXIT__

@@ -17,25 +17,25 @@ enum EntityType {
 
 class Entity {
 public:
-	Entity(const char* name, const char* description, Entity* parent);
+	Entity(const char* name, const char* description);
 	virtual ~Entity();
 
-	virtual void Update() const;
+	virtual void update() const;
 
-	Entity* findContains(const string& name, EntityType type) const;
-
-	void changeParentTo(Entity* new_parent);
+	Entity* findByEntityType(EntityType type) const;
+	Entity* findByName(const string& name) const;
+	list<Entity*> findAllByEntityType(EntityType type) const;
 	string getName() const;
 	string geDescription() const;
 	EntityType getType() const;
+	void addToContains(Entity* element);
+	void removeFromContains(Entity* element);
 
 protected:
 	EntityType type;
 	string name;
 	string description;
 	list<Entity*> contains;
-	Entity* parent;
-
 };
 
 #endif

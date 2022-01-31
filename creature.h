@@ -15,22 +15,20 @@ public:
 	Creature(const char* name, const char* description, Room* room);
 	~Creature();
 
-	virtual void Update() const;
-	virtual void stats() const;
+	virtual void update() const;
 
 	virtual bool go(const string& direction);
-	virtual bool take(const string& item);
+	virtual bool take(const string& item, const string& subitem);
 	virtual bool drop(const string& item);
 	virtual void inventory() const;
-	virtual bool unlock(const string& direction);
+	virtual bool unlock();
 
 	bool isAlive() const;
-	Room* getRoom() const;
-	Item* getItemTaken() const;
+	Room* getLocation() const;
 
 private:
 	bool alive;
-	Item* item_taken;
+	Room* location; // Room where the creature is.
 };
 
 #endif

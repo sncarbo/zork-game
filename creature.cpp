@@ -5,84 +5,99 @@
 #include "item.h"
 
 
-//----------------------------------------
-Creature::Creature(const char* name, const char* description, Room* creature_room) :
-Entity(name, description, creature_room)
+Creature::Creature(const char* name, const char* description, Room* location) :
+Entity(name, description), alive(alive), location(location)
 {
 	type = CREATURE;
-	alive = true;
 }
-//----------------------------------------
+
 Creature::~Creature(){}
-//----------------------------------------
+
 bool Creature::isAlive() const
 {
 	return alive;
 }
-//----------------------------------------
-Room* Creature::getRoom() const
+
+Room* Creature::getLocation() const
 {
-	return (Room*)parent;
+	return location;
 }
-//----------------------------------------
-Item* Creature::getItemTaken() const
+
+void Creature::update() const
 {
-	return item_taken;
+	cout << "Creature name: " << getName() << endl;
+	cout << description << endl;
+	cout << "This creature is " << (isAlive() ? "ALIVE" : "DEAD") << " and is placed at " << getLocation()->getName() << " room" << endl;
 }
-//----------------------------------------
-void Creature::Update() const
-{
-	cout << name << " and is... " << ((isAlive()) ? "ALIVE" : "DEAD") << endl;
-	cout << description;
-}
-//----------------------------------------
+
 bool Creature::go(const string& direction)
 {
 	bool result = false;
-	Exit* exit = getRoom()->getExit(direction);
+	Exit* exit = getLocation()->getExit();
 
-	if (isAlive() && exit != NULL) {
-		changeParentTo(exit->getNextRoom());
+	if (isAlive() && exit != NULL && exit->getDirectionString() == direction && !exit->isLocked()) {
+		
 		result = true;
-		cout << "Yout left this room... Now you're going to " << exit->getNextRoomName() << endl;
+		cout << "Yout left this room... Now you're going to " << exit->getNextRoom()->getName() << endl;
 	}
 
 	return result;
 }
-//-------------------------------------------
-bool Creature::take(const string& item)
+
+bool Creature::take(const string& item, const string& subitem = "")
 {
 	bool result = false;
-	
+	Item* item_taken = (Item*)getLocation()->findByName(item);
 
-	if (item.find(" ") != string::npos)
+	if (item_taken != (Item*)this->findByName(item))
 	{
-		size_t space = item.find(" ");
-		string main_item = item.substr(0, space-1);
-		string subitem = item.substr(space, item.length()-1);
+		if (item_taken->getItemType() == BOX && subitem != ""){
+			Item* subitem_taken = (Item*)item_taken->findByName(subitem);
+			this->addToContains(subitem_taken);
+			result = true;
+		}
+		else if (subitem == "") {
+			this->addToContains(item_taken);
+			result = true;
+		}
 	}
-
-	item_taken = (Item*)parent->findContains(item, ITEM);
 
 	return result;
 }
-//-------------------------------------------
+
 bool Creature::drop(const string& item)
 {
-	
+	bool result = false;
+	Item* dropped_item = (Item*)this->findByName(item);
+	list<Entity*> items_room =getLocation()->findAllByEntityType(ITEM);
+
+	for (list<Entity*>::const_iterator it = items_room.begin(); it != items_room.cend() && !result; ++it)
+	{
+		if (((Item*)*it)->getItemType() == BOX)
+		{
+			(*it)->addToContains(dropped_item);
+			this->removeFromContains(dropped_item);
+			result = true;
+		}
+	}
+
+	return result;
 }
-//-------------------------------------------
+
 void Creature::inventory() const
 {
-	if (getItemTaken() == NULL)
-		cout << "You don't have any items...";
-	else
-		cout << "You have an item! It's a " << getItemTaken()->getItemTypeString() << endl;
+	cout << "This creature have this items: ";
+
+	for (list<Entity*>::const_iterator it = contains.begin(); it != contains.cend(); ++it) {
+		cout << (*it)->getName() << " ";
+	}
+
+	cout << endl;
 }
-//-------------------------------------------
-bool Creature::unlock(const string& direction) {
+
+bool Creature::unlock() {
 	bool result = false;
-	Exit* exit = getRoom()->getExit(direction);
+	Exit* exit = getLocation()->getExit();
 
 	if (isAlive() && exit != NULL && item_taken != NULL && item_taken->getItemType() == KEY && exit->isLocked())
 	{
