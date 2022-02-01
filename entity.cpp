@@ -92,3 +92,8 @@ list<Entity*> Entity::findAllByEntityType(EntityType type) const
 
 	return result;
 }
+
+list<Entity*> Entity::getContains() const
+{
+	return contains;
+}

@@ -27,6 +27,7 @@ public:
 	list<Entity*> findAllByEntityType(EntityType type) const;
 	string getName() const;
 	string getDescription() const;
+	list<Entity*> getContains() const;
 	EntityType getType() const;
 	void addToContains(Entity* element);
 	void removeFromContains(Entity* element);

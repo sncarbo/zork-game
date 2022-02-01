@@ -9,6 +9,9 @@ Creature::Creature(const char* name, const char* description, Room* location) :
 Entity(name, description), location(location)
 {
 	type = CREATURE;
+	
+	if(location != NULL)
+		location->addToContains(this);
 }
 
 Creature::~Creature(){}
@@ -55,12 +58,14 @@ bool Creature::take(const string& item, const string& subitem = "")
 			{
 				item_taken->removeFromContains(subitem_taken);
 				this->addToContains(subitem_taken);
+				getLocation()->removeFromContains(subitem_taken);
 				result = true;
 				cout << "You just took " << subitem_taken->getName() << " from the box." << endl;
 			}
 		}
 		else if (subitem == "" && item_taken->getItemType() != BOX && !item_taken->isContainedInBox()) {
 			this->addToContains(item_taken);
+			getLocation()->removeFromContains(item_taken);
 			result = true;
 			cout << "You just took " << item_taken->getName() << "." << endl;
 		}
@@ -69,20 +74,39 @@ bool Creature::take(const string& item, const string& subitem = "")
 	return result;
 }
 
-bool Creature::drop(const string& item)
+bool Creature::drop(const string& item, const string& subitem = "")
 {
 	bool result = false;
-	Item* dropped_item = (Item*)this->findByName(item);
-	list<Entity*> items_room = getLocation()->findAllByEntityType(ITEM);
+	Item* dropped_item;
 
-	for (list<Entity*>::const_iterator it = items_room.begin(); it != items_room.cend() && !result; ++it)
+	if(subitem != "")
+		dropped_item = (Item*)this->findByName(subitem);
+	else
+		dropped_item = (Item*)this->findByName(item);
+
+	if (dropped_item != NULL)
 	{
-		if (((Item*)*it)->getItemType() == BOX)
+		if (subitem != "")
 		{
-			(*it)->addToContains(dropped_item);
+			list<Entity*> related_items = getLocation()->findAllByEntityType(ITEM);
+
+			for (list<Entity*>::const_iterator it = related_items.begin(); it != related_items.cend(); ++it)
+			{
+				if (((Item*)*it)->getItemType() == BOX)
+				{
+					(*it)->addToContains(dropped_item);
+					this->removeFromContains(dropped_item);
+					getLocation()->removeFromContains(dropped_item);
+					cout << "You just dropped " << dropped_item->getName() << " in the box." << endl;
+				}
+			}
+		}
+		else
+		{
+			getLocation()->addToContains((Entity*)dropped_item);
 			this->removeFromContains(dropped_item);
 			result = true;
-			cout << "You just dropped " << dropped_item->getName() << " in the box." << endl;
+			cout << "You just dropped " << dropped_item->getName() << "." << endl;
 		}
 	}
 

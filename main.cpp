@@ -12,7 +12,8 @@ bool validWord(const string& word)
 
 	if (_stricmp(aux.c_str(), "go") == 0 || _stricmp(aux.c_str(), "take") == 0
 		|| _stricmp(aux.c_str(), "drop") == 0 || _stricmp(aux.c_str(), "unlock") == 0
-		|| _stricmp(aux.c_str(), "inventory") == 0 || _stricmp(aux.c_str(), "quit") == 0)
+		|| _stricmp(aux.c_str(), "inventory") == 0 || _stricmp(aux.c_str(), "update") == 0
+		|| _stricmp(aux.c_str(), "quit") == 0)
 		result = true;
 	else
 		cout << "Sorry, it's not a valid word." << endl;

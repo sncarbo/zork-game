@@ -19,7 +19,7 @@ public:
 
 	virtual bool go(const string& direction);
 	virtual bool take(const string& item, const string& subitem);
-	virtual bool drop(const string& item);
+	virtual bool drop(const string& item, const string& subitem);
 	virtual void inventory() const;
 	virtual bool unlock();
 

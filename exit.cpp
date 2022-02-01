@@ -5,7 +5,10 @@
 Exit::Exit(const char* name, const char* description, Room* source_room, Room* next_room, DirectionType direction) :
 Entity(name, description), locked(true), source_room(source_room), next_room(next_room), direction(direction)
 {
-	type = ENTITY;
+	type = EXIT;
+
+	if(source_room != NULL)
+		source_room->addToContains(this);
 }
 
 Exit::~Exit(){}
