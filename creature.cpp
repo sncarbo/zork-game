@@ -6,17 +6,12 @@
 
 
 Creature::Creature(const char* name, const char* description, Room* location) :
-Entity(name, description), alive(alive), location(location)
+Entity(name, description), location(location)
 {
 	type = CREATURE;
 }
 
 Creature::~Creature(){}
-
-bool Creature::isAlive() const
-{
-	return alive;
-}
 
 Room* Creature::getLocation() const
 {
@@ -27,7 +22,7 @@ void Creature::update() const
 {
 	cout << "Creature name: " << getName() << endl;
 	cout << description << endl;
-	cout << "This creature is " << (isAlive() ? "ALIVE" : "DEAD") << " and is placed at " << getLocation()->getName() << " room" << endl;
+	cout << "This creature is at " << getLocation()->getName() << " room." << endl;
 }
 
 bool Creature::go(const string& direction)
@@ -35,9 +30,9 @@ bool Creature::go(const string& direction)
 	bool result = false;
 	Exit* exit = getLocation()->getExit();
 
-	if (isAlive() && exit != NULL && exit->getDirectionString() == direction && !exit->isLocked()) {
-		
+	if (exit != NULL && exit->getDirectionString() == direction && !exit->isLocked()) {
 		result = true;
+		this->location = exit->getNextRoom();
 		cout << "Yout left this room... Now you're going to " << exit->getNextRoom()->getName() << endl;
 	}
 
@@ -69,7 +64,7 @@ bool Creature::drop(const string& item)
 {
 	bool result = false;
 	Item* dropped_item = (Item*)this->findByName(item);
-	list<Entity*> items_room =getLocation()->findAllByEntityType(ITEM);
+	list<Entity*> items_room = getLocation()->findAllByEntityType(ITEM);
 
 	for (list<Entity*>::const_iterator it = items_room.begin(); it != items_room.cend() && !result; ++it)
 	{
@@ -98,11 +93,20 @@ void Creature::inventory() const
 bool Creature::unlock() {
 	bool result = false;
 	Exit* exit = getLocation()->getExit();
+	list<Entity*> items = this->findAllByEntityType(ITEM);
+	Item* key = NULL;
 
-	if (isAlive() && exit != NULL && item_taken != NULL && item_taken->getItemType() == KEY && exit->isLocked())
+	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+	{
+		if (((Item*)*it)->getItemType() == KEY)
+			key = ((Item*) *it);
+	}
+
+	if (exit != NULL && key != NULL && exit->isLocked())
 	{
 		exit->unlock();
-		cout << "The exit to the room " << parent->getName() << " have just been UNLOCKED." << endl;
+		this->removeFromContains(key);
+		cout << "The exit to the room " << getLocation()->getName() << " have just been UNLOCKED." << endl;
 		result = true;
 	}
 

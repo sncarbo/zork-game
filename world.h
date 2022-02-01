@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 
 using namespace std;
 
@@ -14,6 +15,8 @@ class World
 public:
 	World();
 	~World();
+
+	bool command(vector<string>& commands);
 private:
 	list<Entity*> entities;
 	Player* player;

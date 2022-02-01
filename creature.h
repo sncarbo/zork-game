@@ -23,11 +23,9 @@ public:
 	virtual void inventory() const;
 	virtual bool unlock();
 
-	bool isAlive() const;
 	Room* getLocation() const;
 
 private:
-	bool alive;
 	Room* location; // Room where the creature is.
 };
 

@@ -26,7 +26,7 @@ public:
 	Entity* findByName(const string& name) const;
 	list<Entity*> findAllByEntityType(EntityType type) const;
 	string getName() const;
-	string geDescription() const;
+	string getDescription() const;
 	EntityType getType() const;
 	void addToContains(Entity* element);
 	void removeFromContains(Entity* element);

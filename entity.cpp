@@ -40,7 +40,7 @@ string Entity::getName() const
 	return name;
 }
 
-string Entity::geDescription() const
+string Entity::getDescription() const
 {
 	return description;
 }

@@ -48,3 +48,8 @@ string& Item::getItemTypeString() const
 
 	return result;
 }
+
+Room* Item::getRoom() const
+{
+	return room;
+}
