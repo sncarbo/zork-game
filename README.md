@@ -43,3 +43,10 @@ NormalKey1
 NormalKey2
 NormalSketchbook
 ```
+
+#### **Features**
+* 6 connected rooms.
+* Items in the rooms that can be picked up.
+* Being able to drop items (in or outside the box).
+* Items can be placed inside other items (you can place items in the box).
+* Extra feature: exits that can be closed and only open with keys.
