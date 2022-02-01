@@ -1,2 +1,4 @@
 # Zork
-#Zork Manual
+**Author**: Santiago Carbó García
+**Zork Manual**
+
