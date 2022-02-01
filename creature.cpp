@@ -57,6 +57,7 @@ bool Creature::take(const string& item, const string& subitem = "")
 			if (subitem_taken != NULL)
 			{
 				item_taken->removeFromContains(subitem_taken);
+				subitem_taken->setContainedInBox(false);
 				this->addToContains(subitem_taken);
 				getLocation()->removeFromContains(subitem_taken);
 				result = true;
@@ -96,6 +97,7 @@ bool Creature::drop(const string& item, const string& subitem = "")
 				{
 					(*it)->addToContains(dropped_item);
 					this->removeFromContains(dropped_item);
+					dropped_item->setContainedInBox(true);
 					getLocation()->removeFromContains(dropped_item);
 					cout << "You just dropped " << dropped_item->getName() << " in the box." << endl;
 				}
@@ -142,7 +144,7 @@ bool Creature::unlock() {
 	{
 		exit->unlock();
 		this->removeFromContains(key);
-		cout << "The exit to the room " << getLocation()->getName() << " have just been UNLOCKED." << endl;
+		cout << "The exit from the room " << getLocation()->getName() << " have just been UNLOCKED." << endl;
 		result = true;
 	}
 

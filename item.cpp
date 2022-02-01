@@ -73,3 +73,8 @@ bool Item::isContainedInBox() const
 {
 	return containedInBox;
 }
+
+void Item::setContainedInBox(bool value)
+{
+	containedInBox = value;
+}

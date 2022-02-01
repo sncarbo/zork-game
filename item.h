@@ -29,6 +29,7 @@ public:
 	ItemType getItemType() const;
 	string& getItemTypeString() const;
 	bool isContainedInBox() const;
+	void setContainedInBox(bool value);
 
 private:
 	ItemType item_type;
