@@ -3,7 +3,8 @@
 ###### **Link to my repository**: https://github.com/santiagocarbo89/Zork
 #### **Zork Manual**
 
-You can use the following commands:</br></br>
+There are 6 main commands: *go* (to move between rooms, if they are unlocked), *take* (to possess items), *drop* (to unown items), *unlock* (to unseal doors), *inventory* (it lets you know what you hace in possession) and *update* (it tells you information about the items, room, exits and creatures).
+You have to use the commands this way:</br></br>
 
 ```
 inventory               // It tells you what items you have
