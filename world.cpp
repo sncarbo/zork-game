@@ -15,6 +15,8 @@ World::World() {
 	Room* freedom = new Room("Freedom!", "Congratulations! You managed to escape from that 'monster house'. Now, you are ready to face the world. Or not...");
 	Exit* bedroom_exit = new Exit("Bedroom exit", "This exit connects the bedroom and the living room", bedroom, living_room, SOUTH);
 	Exit* living_room_exit = new Exit("Living room exit", "This exit connects the living room and FREEDOM", living_room, freedom, EAST);
+	bedroom->setExit(bedroom_exit);
+	living_room->setExit(living_room_exit);
 
 	entities.push_back(bedroom);
 	entities.push_back(living_room);
@@ -26,13 +28,13 @@ World::World() {
 
 	entities.push_back(mom);
 
-	Item* gameboy = new Item("Gameboy", "It's your gameboy. Your favourite thing ever.", GAMEBOY, bedroom);
-	Item* sketchbook = new Item("Sketchbook", "It's your sketchbook. You recently draw Buzz Lightyear", SKETCHBOOK, bedroom);
-	Item* box_bedroom = new Item("Bedroom box", "It's just a common box.", BOX, bedroom);
-	Item* key_bedroom = new Item("Bedroom key", "It's the bedroom key... WAIT, YOU CAN LEAVE NOW.", KEY, bedroom);
-	Item* laptop = new Item("Laptom", "It's your mom's laptop.", LAPTOP, living_room);
-	Item* box_living_room = new Item("Living room box", "It's just another common box.", BOX, living_room);
-	Item* key_living_room = new Item("Living room key", "KEY TO FREEDOM.", KEY, living_room);
+	Item* gameboy = new Item("Gameboy", "It's your gameboy. Your favourite thing ever.", GAMEBOY, bedroom, false);
+	Item* sketchbook = new Item("Sketchbook", "It's your sketchbook. You recently draw Buzz Lightyear", SKETCHBOOK, bedroom, false);
+	Item* key_bedroom = new Item("BedroomKey", "It's the bedroom key... WAIT, YOU CAN LEAVE NOW.", KEY, bedroom, true);
+	Item* box_bedroom = new Item("BedroomBox", "It's just a common box.", BOX, bedroom, false);
+	Item* laptop = new Item("Laptom", "It's your mom's laptop.", LAPTOP, living_room, false);
+	Item* key_living_room = new Item("LivingRoomKey", "KEY TO FREEDOM.", KEY, living_room, true);
+	Item* box_living_room = new Item("LivingRoomBox", "It's just another common box.", BOX, living_room, false);
 
 	entities.push_back(gameboy);
 	entities.push_back(sketchbook);

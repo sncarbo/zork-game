@@ -20,7 +20,7 @@ enum ItemType
 class Item : public Entity
 {
 public:
-	Item(const char* name, const char* description, ItemType item_type, Room* room);
+	Item(const char* name, const char* description, ItemType item_type, Room* room, bool containedInBox);
 	~Item();
 
 	void update() const;
@@ -28,10 +28,12 @@ public:
 	Room* getRoom() const;
 	ItemType getItemType() const;
 	string& getItemTypeString() const;
+	bool isContainedInBox() const;
 
 private:
 	ItemType item_type;
 	Room* room;
+	bool containedInBox;
 };
 
 #endif // !__ITEM__

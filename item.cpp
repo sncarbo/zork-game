@@ -3,10 +3,25 @@
 #include "item.h"
 #include "exit.h"
 
-Item::Item(const char* name, const char* description, ItemType item_type, Room* room) :
-Entity(name, description), item_type(item_type), room(room)
+Item::Item(const char* name, const char* description, ItemType item_type, Room* room, bool containedInBox) :
+Entity(name, description), item_type(item_type), room(room), containedInBox(containedInBox)
 {
 	type = ITEM;
+
+	if (item_type == BOX)
+	{
+		list<Entity*> items = room->findAllByEntityType(ITEM);
+		
+		for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+		{
+			if (((Item*)*it)->getItemType() == KEY) {
+				this->addToContains((*it));
+			}
+		}
+	}
+
+	if(room != NULL)
+		room->addToContains(this);
 }
 
 Item::~Item(){}
@@ -52,4 +67,9 @@ string& Item::getItemTypeString() const
 Room* Item::getRoom() const
 {
 	return room;
+}
+
+bool Item::isContainedInBox() const
+{
+	return containedInBox;
 }

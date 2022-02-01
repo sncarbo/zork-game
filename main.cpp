@@ -38,16 +38,23 @@ int main()
 		{
 			input = "";
 			cout << ">> ";
-			cin >> input;
+			getline(cin >> ws, input);
 
 		} while (!validWord(input));
 
-		while (input.find(" ") != string::npos)
-		{
-			commands.push_back(input.substr(0, input.find(" ")));
-			input = input.substr(input.find(" ") + 1, (input.size()- input.find(" ")));
-			cout << input;
+		string temp = "";
+		for (int i = 0; i < input.length(); ++i) {
+
+			if (input[i] == ' ') {
+				commands.push_back(temp);
+				temp = "";
+			}
+			else {
+				temp.push_back(input[i]);
+			}
+
 		}
+		commands.push_back(temp);
 
 		zork->command(commands);
 

@@ -17,8 +17,10 @@ public:
 
 	void update() const;
 
+	void setExit(Exit* exit);
 	Exit* getExit() const;
-
+private:
+	Exit* exit;
 };
 
 #endif

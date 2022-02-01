@@ -26,7 +26,7 @@ public:
 	Room* getSourceRoom() const;
 	Room* getNextRoom() const;
 	DirectionType getDirection() const;
-	string& getDirectionString() const;
+	string getDirectionString() const;
 
 private:
 	bool locked;

@@ -2,7 +2,7 @@
 #include "room.h"
 
 Room::Room(const char* name, const char* description) :
-Entity(name, description)
+Entity(name, description), exit(NULL)
 {
 	type = ROOM;
 }
@@ -23,9 +23,12 @@ void Room::update() const
 
 Exit* Room::getExit() const
 {
-	Exit* result = (Exit*)findByEntityType(EXIT);
+	return exit;
+}
 
-	return result;
+void Room::setExit(Exit* exit)
+{
+	this->exit = exit;
 }
 
 

@@ -41,7 +41,7 @@ DirectionType Exit::getDirection() const
 	return direction;
 }
 
-string& Exit::getDirectionString() const
+string Exit::getDirectionString() const
 {
 	string result = "";
 

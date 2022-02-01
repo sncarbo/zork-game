@@ -35,6 +35,8 @@ bool Creature::go(const string& direction)
 		this->location = exit->getNextRoom();
 		cout << "Yout left this room... Now you're going to " << exit->getNextRoom()->getName() << endl;
 	}
+	else
+		cout << "You can't go that way or there is a blocked door." << endl;
 
 	return result;
 }
@@ -44,16 +46,23 @@ bool Creature::take(const string& item, const string& subitem = "")
 	bool result = false;
 	Item* item_taken = (Item*)getLocation()->findByName(item);
 
-	if (item_taken != (Item*)this->findByName(item))
+	if (item_taken != (Item*)this->findByName(item) && item_taken != NULL)
 	{
-		if (item_taken->getItemType() == BOX && subitem != ""){
+		if (item_taken->getItemType() == BOX && subitem != "" && item_taken != NULL){
 			Item* subitem_taken = (Item*)item_taken->findByName(subitem);
-			this->addToContains(subitem_taken);
-			result = true;
+
+			if (subitem_taken != NULL)
+			{
+				item_taken->removeFromContains(subitem_taken);
+				this->addToContains(subitem_taken);
+				result = true;
+				cout << "You just took " << subitem_taken->getName() << " from the box." << endl;
+			}
 		}
-		else if (subitem == "") {
+		else if (subitem == "" && item_taken->getItemType() != BOX && !item_taken->isContainedInBox()) {
 			this->addToContains(item_taken);
 			result = true;
+			cout << "You just took " << item_taken->getName() << "." << endl;
 		}
 	}
 
@@ -73,6 +82,7 @@ bool Creature::drop(const string& item)
 			(*it)->addToContains(dropped_item);
 			this->removeFromContains(dropped_item);
 			result = true;
+			cout << "You just dropped " << dropped_item->getName() << " in the box." << endl;
 		}
 	}
 
@@ -88,6 +98,8 @@ void Creature::inventory() const
 	}
 
 	cout << endl;
+
+	update();
 }
 
 bool Creature::unlock() {
