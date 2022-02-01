@@ -1,6 +1,10 @@
 # Escape Room Zork
 ###### **Author**: Santiago Carbó García
 ###### **Link to my repository**: https://github.com/santiagocarbo89/Zork
+#### **What is 'Escape Room Zork'?**
+
+'Escape Room Zork' is a conversational game developed in C++. It's a text adventure based in the popular game 'Zork' of the late 1970s.
+
 #### **Zork Manual**
 
 There are 6 main commands: *go* (to move between rooms, if they are unlocked), *take* (to possess items), *drop* (to unown items), *unlock* (to unseal doors), *inventory* (it lets you know what you hace in possession) and *update* (it tells you information about the items, room, exits and creatures).</br></br>
