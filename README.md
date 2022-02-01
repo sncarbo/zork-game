@@ -13,6 +13,7 @@ take [item]             // Example: "take Gameboy".
 take [box] [item]       // Example: "take BedroomBox BedroomKey".
 drop [item]             // Example: "drop Gameboy".
 drop [box] [item]       // Example: "drop BedroomBox BedroomKey".
+unlock
 quit                    // To finish the game
 ```
 You need to know the directions you can go (typed UPPERCASE):
@@ -32,4 +33,13 @@ Sketchbook
 BedroomKey
 BedroomBox
 Laptop
+LivingRoomKey
+LivingRoomBox
+KeyGameboy
+GameboyColor
+GameboyAdvance
+KeyKey
+NormalKey1
+NormalKey2
+NormalSketchbook
 ```
